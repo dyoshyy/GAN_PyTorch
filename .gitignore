@@ -8,3 +8,9 @@ wheels/
 
 # venv
 .venv
+
+# mypy cache
+.mypy_cache/
+
+# ruff cache
+.ruff_cache/
