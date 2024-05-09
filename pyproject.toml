@@ -1,10 +1,16 @@
 [project]
 name = "pytorch-tutorial"
 version = "0.1.0"
-description = "Add your description here"
-dependencies = []
+description = "learn basics"
+dependencies = [
+    "torch>=2.3.0",
+    "numpy>=1.26.4",
+]
 readme = "README.md"
-requires-python = ">= 3.8"
+requires-python = ">= 3.12"
+
+[project.scripts]
+main = 'pytorch_tutorial:main'
 
 [build-system]
 requires = ["hatchling"]
@@ -19,3 +25,39 @@ allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pytorch_tutorial"]
+
+# Lint/Formatter非依存のルール
+[tool.ruff]
+# 除外したいファイル
+# excludeを設定するとデフォルトで設定されている.venv配下などの設定が上書きされるため要注意
+# extend-exclude = ["src/something.py"]
+# 行文字数
+line-length = 88
+# インデント幅
+indent-width = 4
+
+# Linterのルール
+[tool.ruff.lint]
+# Lintルール
+# https://docs.astral.sh/ruff/rules/　に記載されているルールのうち、Codeが前方一致するルールが適用されます
+select = ["E", "F", "I", "PLR"]
+# 除外するLintルール
+# selectで選択したルールから除外したいものを指定できます
+ignore = ["PLR2004"]
+# auto fixの対象にするルール
+fixable = ["ALL"]
+# auto fixから除外するルール
+# editor.formatOnSaveを使う際に自動でFixされると困るものを指定できます
+unfixable = ["F401"]
+
+# Formatterのルール
+[tool.ruff.format]
+# 文字列をダブルクォートに統一
+quote-style = "double"
+# インデントをタブ文字(\t)からスペースに変換
+indent-style = "space"
+
+[tool.ruff.per-file-ignores]
+# 個別設定
+# __init__.pyは未使用インポートを許容
+"__init__.py" = ["F401"]

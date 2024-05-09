@@ -1,2 +1,1 @@
-def hello() -> str:
-    return "Hello from pytorch-tutorial!"
+from .main import main
