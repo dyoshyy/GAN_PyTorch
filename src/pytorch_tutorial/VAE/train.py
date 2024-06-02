@@ -3,7 +3,7 @@ import torch
 from torch import optim
 from torch.utils.tensorboard import SummaryWriter
 
-from .network import VariationalAutoEncoder
+from pytorch_tutorial.VAE.network import VariationalAutoEncoder
 
 
 def train(dataloader_train, dataloader_valid) -> None:

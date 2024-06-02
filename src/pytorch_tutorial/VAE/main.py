@@ -1,8 +1,9 @@
-from pytorch_tutorial.VAE import load_data, train
+from pytorch_tutorial import VAE
 
-if __name__ == "__main__":
+
+def VariationalAutoencoder() -> None:
     # Load the data
-    train_dataloader, valid_dataloader, test_dataloader = load_data()
+    train_dataloader, valid_dataloader, test_dataloader = VAE.load_data()
     # Train the model
-    train(train_dataloader, valid_dataloader)
+    VAE.train(train_dataloader, valid_dataloader)
     # Test the model
