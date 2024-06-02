@@ -27,9 +27,11 @@ def load_data() -> (
 
     # trainデータとtestデータに分けてデータセットを取得
     dataset_train_valid = datasets.MNIST(
-        "./", train=True, download=True, transform=transform
+        "./datasets", train=True, download=True, transform=transform
     )
-    dataset_test = datasets.MNIST("./", train=False, download=True, transform=transform)
+    dataset_test = datasets.MNIST(
+        "./datasets", train=False, download=True, transform=transform
+    )
 
     # trainデータの20%はvalidationデータとして利用
     size_train_valid = len(dataset_train_valid)  # 60000
