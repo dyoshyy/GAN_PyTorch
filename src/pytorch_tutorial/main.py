@@ -1,2 +1,5 @@
+from pytorch_tutorial.GAN import GenerativeAdversarialNetworks
+
+
 def main() -> None:
-    print("Hello, World!")
+    GenerativeAdversarialNetworks()

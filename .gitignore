@@ -14,3 +14,9 @@ wheels/
 
 # ruff cache
 .ruff_cache/
+
+# datasets
+datasets/
+
+# trained models
+*.pth
