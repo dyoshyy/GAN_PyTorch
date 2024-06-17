@@ -32,7 +32,7 @@ def train() -> None:
 
     # load data
     train_set = datasets.MNIST(
-        "datasets/mnist/", train=True, download=True, transform=transform
+        "datasets/", train=True, download=True, transform=transform
     )
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
 
