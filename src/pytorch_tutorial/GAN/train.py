@@ -1,3 +1,5 @@
+import os
+
 import torch
 from torch import nn, optim
 from torch.utils.data import DataLoader
@@ -54,6 +56,7 @@ def train() -> None:
             fake_outputs = D(fake_inputs)
             fake_label = torch.zeros(fake_inputs.shape[0], 1).to(device)
 
+            # リアル画像とフェイク画像のデータとラベルを結合
             outputs = torch.cat((real_outputs, fake_outputs), 0)
             targets = torch.cat((real_label, fake_label), 0)
 
@@ -78,10 +81,12 @@ def train() -> None:
 
             if idx % 100 == 0 or idx == len(train_loader):
                 print(
-                    "Epoch {} Iteration {}: discriminator_loss {:.3f} generator_loss {:.3f}".format(  # noqa: E501
-                        epoch, idx, D_loss.item(), G_loss.item()
-                    )
+                    f"Epoch {epoch} Iteration {idx}: discriminator_loss {D_loss.item()} generator_loss {G_loss.item()}"  # noqa: E501
                 )
         if (epoch) % 10 == 0:
-            torch.save(G, "models/GAN/Generator_epoch_{}.pth".format(epoch))
+            model_dir = "models/GAN"
+            # ディレクトリが存在しない場合は作成
+            if not os.path.exists(model_dir):
+                os.makedirs(model_dir)
+            torch.save(G, f"{model_dir}/Generator_epoch_{epoch}.pth")
             print("Model saved.")
