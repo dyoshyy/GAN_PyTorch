@@ -18,5 +18,8 @@ wheels/
 # datasets
 datasets/
 
+# results
+results/
+
 # trained models
 *.pth

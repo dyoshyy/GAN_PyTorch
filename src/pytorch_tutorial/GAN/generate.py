@@ -1,10 +1,10 @@
+import os
+
 import matplotlib.pyplot as plt
 import torch
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import transforms
-
-from pytorch_tutorial.GAN.model import generator
 
 
 def generate() -> None:
@@ -27,13 +27,20 @@ def generate() -> None:
         "./datasets", train=True, download=True, transform=transform
     )
     train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=True)
-    G = generator().to(device)
-    G.load_state_dict(torch.load("models/GAN/Generator_epoch_100.pth"))
+    # G = generator().to(device)
+    # G.load_state_dict(torch.load("./models/GAN/Generator_epoch_100.pth"))
+    G = torch.load("./models/GAN/Generator_epoch_100.pth")
+
+    if not os.path.exists("./results/GAN"):
+        os.makedirs("./results/GAN")
+
+    idx = 0
 
     for i, _ in train_loader:
+        idx += 1
         print("real")
         plt.imsave(
-            f"results/GAN/real_{i}.png",
+            f"results/GAN/real_{idx}.png",
             i[0][0].cpu().detach().numpy().reshape(28, 28),
         )
         real_inputs = i[0][0]
@@ -42,7 +49,6 @@ def generate() -> None:
         fake_inputs = G(noise)
         print("fake")
         plt.imsave(
-            f"results/GAN/fake_{i}.png",
+            f"results/GAN/fake_{idx}.png",
             fake_inputs[0][0].cpu().detach().numpy().reshape(28, 28),
         )
-        break
