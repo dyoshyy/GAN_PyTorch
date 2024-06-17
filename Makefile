@@ -2,7 +2,7 @@
 .DEFAULT_GOAL := help
 
 run: ## Run Python Script
-	@rye run main
+	@rye run main $(model)
 
 fmt: ## Format python code
 	@rye run fmt
