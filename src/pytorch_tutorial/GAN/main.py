@@ -10,10 +10,6 @@ def GenerativeAdversarialNetworks() -> None:
     """
 
     model_path = "./models/GAN/Generator_epoch_100.pth"
-    print("Checking path:", model_path)
-    print("Absolute path:", os.path.abspath(model_path))
-    print("Exists:", os.path.exists(model_path))
-    print("Current directory:", os.getcwd())
 
     if os.path.exists(model_path):
         # Pretrained model exists
