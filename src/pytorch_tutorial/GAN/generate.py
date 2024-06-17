@@ -38,7 +38,6 @@ def generate() -> None:
 
     for i, _ in train_loader:
         idx += 1
-        print("real")
         plt.imsave(
             f"results/GAN/real_{idx}.png",
             i[0][0].cpu().detach().numpy().reshape(28, 28),
@@ -47,7 +46,6 @@ def generate() -> None:
         noise = (torch.rand(real_inputs.shape[0], 128) - 0.5) / 0.5
         noise = noise.to(device)
         fake_inputs = G(noise)
-        print("fake")
         plt.imsave(
             f"results/GAN/fake_{idx}.png",
             fake_inputs[0][0].cpu().detach().numpy().reshape(28, 28),
