@@ -1,5 +1,6 @@
 import os
 import random
+from collections import OrderedDict
 
 import numpy as np
 import torch
@@ -11,6 +12,7 @@ from pytorch_tutorial.DCGAN.constants import (
     beta1,
     data_root,
     dataset_name,
+    fixed_noise,
     lr,
     manualSeed,
     model_root,
@@ -21,11 +23,21 @@ from pytorch_tutorial.DCGAN.constants import (
 from pytorch_tutorial.DCGAN.dataset import load_data
 from pytorch_tutorial.DCGAN.networks import Discriminator, Generator, weights_init
 from pytorch_tutorial.DCGAN.train import train
+from pytorch_tutorial.DCGAN.utils import plot_real_and_fake_images
+
+
+# モデルの状態をロードする前に、state_dictのキーを修正する関数
+def fix_state_dict(state_dict):
+    new_state_dict = OrderedDict()
+    for k, v in state_dict.items():
+        name = k[7:] if k.startswith("module.") else k  # 'module.'を削除
+        new_state_dict[name] = v
+    return new_state_dict
 
 
 def DeepConvolutionalGenerativeAdversarialNetworks() -> None:
     # make paths
-    model_path = "./models/DCGAN/Generator_epoch_10.pth"
+    model_path = "./models/DCGAN/Generator_epoch_35.pth"
     if not os.path.exists(model_root):
         os.makedirs(model_root)
     if not os.path.exists(data_root):
@@ -102,5 +114,14 @@ def DeepConvolutionalGenerativeAdversarialNetworks() -> None:
 
     # generate fake images
     G = Generator(ngpu=ngpu).to(device)
-    G.load_state_dict(torch.load(model_path))
+    state_dict = torch.load(model_path)
+    state_dict = fix_state_dict(state_dict)  # キーを修正
+    G.load_state_dict(state_dict)
     G.eval()
+
+    dataloader = load_data()
+
+    real_images = next(iter(dataloader))[0]
+    fake_images = G(fixed_noise).detach().cpu()
+
+    plot_real_and_fake_images(real_images, fake_images, device)
