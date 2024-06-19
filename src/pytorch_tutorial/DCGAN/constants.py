@@ -1,5 +1,14 @@
+import torch
+
 # Root directory for dataset
-dataroot = "data/celeba"
+dataset_name = "celeba"
+data_root = f"datasets/{dataset_name}/"
+# data_root = f"datasets/{dataset_name}/"
+model_root = "models/DCGAN/"
+results_root = "results/DCGAN/"
+
+# seed
+manualSeed = 999
 
 # Number of workers for dataloader
 workers = 2
@@ -24,7 +33,7 @@ ngf = 64
 ndf = 64
 
 # Number of training epochs
-num_epochs = 5
+num_epochs = 50
 
 # Learning rate for optimizers
 lr = 0.0002
@@ -33,4 +42,12 @@ lr = 0.0002
 beta1 = 0.5
 
 # Number of GPUs available. Use 0 for CPU mode.
-ngpu = 1
+ngpu = 4
+
+# Establish convention for real and fake labels during training
+real_label = 1.0
+fake_label = 0.0
+
+# Create batch of latent vectors that we will use to visualize
+#  the progression of the generator
+fixed_noise = torch.randn(64, nz, 1, 1, device="cuda")

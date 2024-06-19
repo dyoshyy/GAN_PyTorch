@@ -76,7 +76,19 @@ class Generator(nn.Module):
 
 
 class Discriminator(nn.Module):
-    def __init__(self, ngpu):
+    """
+    Discriminator network for DCGAN.
+
+    Args:
+      ngpu (int): Number of GPUs available.
+
+    Attributes:
+      ngpu (int): Number of GPUs available.
+      main (nn.Sequential): Sequential container for the discriminator network layers.
+
+    """
+
+    def __init__(self, ngpu: int):
         super(Discriminator, self).__init__()
         self.ngpu = ngpu
         self.main = nn.Sequential(
@@ -100,5 +112,15 @@ class Discriminator(nn.Module):
             nn.Sigmoid(),
         )
 
-    def forward(self, input):
+    def forward(self, input: torch.Tensor) -> torch.Tensor:
+        """
+        Forward pass of the discriminator network.
+
+        Args:
+          input (torch.Tensor): Input tensor to the discriminator network.
+
+        Returns:
+          torch.Tensor: Output tensor from the discriminator network.
+
+        """
         return self.main(input)

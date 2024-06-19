@@ -1,5 +1,6 @@
 import argparse
 
+from pytorch_tutorial.DCGAN import DeepConvolutionalGenerativeAdversarialNetworks
 from pytorch_tutorial.GAN import GenerativeAdversarialNetworks
 from pytorch_tutorial.VAE import VariationalAutoencoder
 
@@ -9,16 +10,19 @@ def main() -> None:
     parser.add_argument(
         "model",
         type=str,
-        choices=["GAN", "VAE"],
-        help="The model to run: 'GAN' or 'VAE'",
+        choices=["GAN", "VAE", "DCGAN"],
+        help="The model to run: 'GAN', 'VAE', 'DCGAN'",
     )
     args = parser.parse_args()
 
     model = args.model
 
-    if model == "GAN":
-        GenerativeAdversarialNetworks()
-    elif model == "VAE":
-        VariationalAutoencoder()
-    else:
-        raise ValueError(f"Unknown model: {model}")
+    match model:
+        case "GAN":
+            GenerativeAdversarialNetworks()
+        case "VAE":
+            VariationalAutoencoder()
+        case "DCGAN":
+            DeepConvolutionalGenerativeAdversarialNetworks()
+        case _:
+            raise ValueError(f"Unknown model: {model}")
